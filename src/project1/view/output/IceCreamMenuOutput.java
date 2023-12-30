@@ -3,7 +3,7 @@ package project1.view.output;
 import project1.model.productList.IceCream;
 
 public class IceCreamMenuOutput {
-    private IceCream iceCream;
+    private final IceCream iceCream;
 
     public IceCreamMenuOutput(IceCream iceCream) {
         this.iceCream = iceCream;

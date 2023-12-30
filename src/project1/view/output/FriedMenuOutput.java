@@ -3,7 +3,7 @@ package project1.view.output;
 import project1.model.productList.Fried;
 
 public class FriedMenuOutput {
-    private Fried fried;
+    private final Fried fried;
 
     public FriedMenuOutput(Fried fried) {
         this.fried = fried;

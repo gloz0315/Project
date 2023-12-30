@@ -3,7 +3,7 @@ package project1.view.output;
 import project1.model.productList.Beer;
 
 public class BeerMenuOutput {
-    private Beer beer;
+    private final Beer beer;
 
     public BeerMenuOutput(Beer beer) {
         this.beer = beer;
