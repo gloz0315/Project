@@ -15,8 +15,8 @@ public class BurgerMenuOutput {
         System.out.println("[ Burgers MENU ]");
 
         for(int i = 0; i < burgers.products().size(); i++) {
-            System.out.println(String.format(format,i+1,burgers.products().get(i).getName(),
-                    burgers.products().get(i).itemPrice(), burgers.products().get(i).getDescription()));
+            System.out.printf((format) + "%n",i+1,burgers.products().get(i).getName(),
+                    burgers.products().get(i).itemPrice(), burgers.products().get(i).getDescription());
         }
         System.out.println();
         System.out.println("0. 메뉴로 돌아가기\n");

@@ -15,8 +15,8 @@ public class IceCreamMenuOutput {
         System.out.println("[ IceCream MENU ]");
 
         for(int i = 0; i < iceCream.products().size(); i++) {
-            System.out.println(String.format(format,i+1,iceCream.products().get(i).getName(),
-                    iceCream.products().get(i).itemPrice(), iceCream.products().get(i).getDescription()));
+            System.out.printf((format) + "%n",i+1,iceCream.products().get(i).getName(),
+                    iceCream.products().get(i).itemPrice(), iceCream.products().get(i).getDescription());
         }
         System.out.println();
         System.out.println("0. 메뉴로 돌아가기\n");

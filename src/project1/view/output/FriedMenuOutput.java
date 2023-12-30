@@ -15,8 +15,8 @@ public class FriedMenuOutput {
         System.out.println("[ Fried MENU ]");
 
         for(int i = 0; i < fried.products().size(); i++) {
-            System.out.println(String.format(format,i+1,fried.products().get(i).getName(),
-                    fried.products().get(i).itemPrice(), fried.products().get(i).getDescription()));
+            System.out.printf((format) + "%n",i+1,fried.products().get(i).getName(),
+                    fried.products().get(i).itemPrice(), fried.products().get(i).getDescription());
         }
         System.out.println();
         System.out.println("0. 메뉴로 돌아가기\n");

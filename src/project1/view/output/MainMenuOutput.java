@@ -22,7 +22,7 @@ public class MainMenuOutput {
         System.out.println("아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.\n");
         System.out.println("[ SHAKESHACK MENU ]");
         for(int i = 0; i < menuNameList.length; i++) {
-            System.out.println(String.format(format,i+1,menuNameList[i],menuDescription[i]));
+            System.out.printf((format) + "%n",i+1,menuNameList[i],menuDescription[i]);
             number = i+1;
         }
 
@@ -36,7 +36,7 @@ public class MainMenuOutput {
 
         System.out.println("[ ORDER MENU ]");
         for(int i = nextNum; i <= nextNum+1; i++) {
-            System.out.println(String.format(format,i,orderName[number],orderDescription[number]));
+            System.out.printf((format) + "%n",i,orderName[number],orderDescription[number]);
             number++;
         }
     }

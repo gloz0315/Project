@@ -15,8 +15,8 @@ public class BeerMenuOutput {
         System.out.println("[ Beer MENU ]");
 
         for(int i = 0; i < beer.products().size(); i++) {
-            System.out.println(String.format(format,i+1,beer.products().get(i).getName(),
-                    beer.products().get(i).itemPrice(), beer.products().get(i).getDescription()));
+            System.out.printf((format) + "%n",i+1,beer.products().get(i).getName(),
+                    beer.products().get(i).itemPrice(), beer.products().get(i).getDescription());
         }
         System.out.println();
         System.out.println("0. 메뉴로 돌아가기\n");
