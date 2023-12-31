@@ -15,6 +15,6 @@ public class IceCream implements ProductList{
 
     @Override
     public List<Item> products() {
-        return new ArrayList<>(productList);
+        return productList;
     }
 }
