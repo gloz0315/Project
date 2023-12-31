@@ -6,16 +6,21 @@ package project1.controller;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import project1.model.Item;
+import project1.model.MenuListInit;
+import project1.model.productList.ProductList;
 import project1.view.InputView;
 import project1.view.output.MainMenuOutput;
 
 public class MainController {
     private Map<Item,Integer> orderMap; // LinkedHashMap을 통해 주문 정보들을 순차적으로 처리하자.
     private MainMenuOutput mainMenuOutput;
+    private MenuListInit menuListInit;
+    private ProductList productList;    // 제품별 정보를 저장하는 인터페이스인 ProductList를 이용할 것임
 
     public MainController() {
         orderMap = new LinkedHashMap<>();
         mainMenuOutput = new MainMenuOutput();
+        menuListInit = new MenuListInit();
     }
 
     public void start() {
