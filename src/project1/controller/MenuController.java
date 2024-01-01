@@ -36,28 +36,62 @@ public class MenuController {
         } else if(productList instanceof Beer) {
             menuOutput = new BeerMenuOutput();
         } else
-            return;
+            return;                         // 예외처리 발생해야함
 
         menuOutput.setMenu(productList);
-        orderMenu();
+        selectMenu();
     }
 
-    public void orderMenu() {
+    public void selectMenu() {
         while(true) {
             menuOutput.printMenu();
             int number = Integer.parseInt(InputView.input());
+            System.out.println();
 
             if(number == 0)
                 break;
 
-            orderController.setProductList(productList);
-            Item item = orderController.choiceMenu(number);
-
-            if(orderMap.containsKey(item)) {
-                orderMap.replace(item, orderMap.get(item) + 1);
-            } else {
-                orderMap.put(item,1);
+            // 메뉴를 고르는데 숫자 번호가 없을 경우 예외 발생
+            if(productList.products().size() < number || number < 0) {
+                // 예외 발생
+                continue;
             }
+            orderController.setProductList(productList);
+            Item item = orderController.choiceMenu(number);     // 아이템 정보를 넘겨줌
+            orderMenu(item);
         }
+    }
+
+    // 메뉴를 장바구니에 넣을 것인지 선택하는 메서드
+    private void orderMenu(Item item) {
+        menuInformation(item);
+        int number = Integer.parseInt(InputView.input());
+        System.out.println();
+
+        if(number == 1) {
+            insertMenu(item);
+            System.out.println(item.getName() + " 가 장바구니에 추가되었습니다.\n");
+            return;
+        } else if(number == 2)
+            return;
+
+        // 예외처리 발생
+    }
+
+    // 메뉴 정보가 출력된 후, 추가할 것인지 확인해주는 메서드
+    private void menuInformation(Item item) {
+        String format = "%-15s | W %.1f | %s";
+        System.out.printf((format) + "%n",item.getName(),item.itemPrice(),item.getDescription());
+        System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
+        System.out.println("1. 확인        2. 취소\n");
+    }
+
+    // 아이템 메뉴를 장바구니에 넣는 메서드
+    private void insertMenu(Item item) {
+        if(orderMap.containsKey(item)) {
+            orderMap.replace(item, orderMap.get(item) + 1);
+            return;
+        }
+        orderMap.put(item,1);
     }
 }

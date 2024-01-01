@@ -5,6 +5,7 @@ package project1.controller;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import project1.model.Item;
 import project1.model.MenuListInit;
 import project1.model.productList.ProductList;
@@ -55,11 +56,14 @@ public class MainController {
                 break;
 
             case 5:         // 장바구니
-
+                printBuyList();
                 return;
 
             case 6:         // 주문취소
                 orderMap.clear(); // orderMap에 대한 정보들을 다 제거
+                return;
+
+            default:        // 예외처리 발생해야함
                 return;
         }
 
@@ -68,4 +72,11 @@ public class MainController {
         System.out.println();
     }
 
+    // 장바구니에 대한 정보 출력
+    private void printBuyList() {
+        for(Entry<Item,Integer> items : orderMap.entrySet()) {
+            System.out.println("음식 이름:" + items.getKey().getName() + " 음식 가격:" + items.getKey().itemPrice()
+             + " 음식 설명:" + items.getKey().getDescription());
+        }
+    }
 }
