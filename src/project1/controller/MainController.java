@@ -13,46 +13,59 @@ import project1.view.output.MainMenuOutput;
 
 public class MainController {
     private Map<Item,Integer> orderMap; // LinkedHashMap을 통해 주문 정보들을 순차적으로 처리하자.
-    private MainMenuOutput mainMenuOutput;
-    private MenuListInit menuListInit;
+    private MainMenuOutput mainMenuOutput;  // 메인 화면에서의 화면 Output 담당
+    private MenuListInit menuListInit;      // 메뉴 별 종류들을 초기화 해주는 클래스
     private ProductList productList;    // 제품별 정보를 저장하는 인터페이스인 ProductList를 이용할 것임
+    private MenuController menuController;
 
     public MainController() {
         orderMap = new LinkedHashMap<>();
         mainMenuOutput = new MainMenuOutput();
         menuListInit = new MenuListInit();
+        menuController = new MenuController();
     }
 
     public void start() {
-        int number = 0;
-
-        while(number != 6) {
+        while(true) {
             mainMenuOutput.welcomeStatement();
             mainMenuOutput.printMainMenu();
-            number = Integer.parseInt(InputView.input());
+            int number = Integer.parseInt(InputView.input());
+            System.out.println();
+
             menuCase(number);
         }
     }
 
     private void menuCase(int number) {
         switch(number) {
-            case 1:
+            case 1:         // 버거
+                productList = menuListInit.burgerMenu();
                 break;
 
-            case 2:
+            case 2:         // 감자튀김
+                productList = menuListInit.friedMenu();
                 break;
 
-            case 3:
+            case 3:         // 음료
+                productList = menuListInit.iceCreamMenu();
                 break;
 
-            case 4:
+            case 4:         // 맥주
+                productList = menuListInit.beerMenu();
                 break;
 
-            case 5:
-                break;
+            case 5:         // 장바구니
 
-            case 6:
-                break;
+                return;
+
+            case 6:         // 주문취소
+                orderMap.clear(); // orderMap에 대한 정보들을 다 제거
+                return;
         }
+
+        menuController.setMenuController(productList, orderMap);
+        menuController.printMenu();
+        System.out.println();
     }
+
 }

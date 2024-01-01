@@ -2,13 +2,15 @@ package project1.view.output;
 
 import project1.model.productList.Fried;
 
-public class FriedMenuOutput {
-    private final Fried fried;
+public class FriedMenuOutput implements MenuOutput{
+    private Fried fried;
 
-    public FriedMenuOutput(Fried fried) {
-        this.fried = fried;
+    @Override
+    public void setMenu(Object type) {
+        fried = (Fried) type;
     }
 
+    @Override
     public void printMenu() {
         String format = "%d. %-15s | W %.1f | %s";
         System.out.println("아래 감자튀김 메뉴판을 보시고 상품을 골라 입력해주세요.\n");

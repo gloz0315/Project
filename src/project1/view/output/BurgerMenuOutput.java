@@ -2,13 +2,15 @@ package project1.view.output;
 
 import project1.model.productList.Burgers;
 
-public class BurgerMenuOutput {
-    private final Burgers burgers;
+public class BurgerMenuOutput implements MenuOutput{
+    private Burgers burgers;
 
-    public BurgerMenuOutput(Burgers burgers) {
-        this.burgers = burgers;
+    @Override
+    public void setMenu(Object type) {
+        burgers = (Burgers) type;
     }
 
+    @Override
     public void printMenu() {
         String format = "%d. %-15s | W %.1f | %s";
         System.out.println("아래 버거메뉴판을 보시고 상품을 골라 입력해주세요.\n");
