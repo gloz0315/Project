@@ -8,10 +8,7 @@ import project1.model.productList.Fried;
 import project1.model.productList.IceCream;
 import project1.model.productList.ProductList;
 import project1.view.InputView;
-import project1.view.output.BeerMenuOutput;
-import project1.view.output.BurgerMenuOutput;
-import project1.view.output.FriedMenuOutput;
-import project1.view.output.IceCreamMenuOutput;
+import project1.view.output.InitMenuOutput;
 import project1.view.output.MenuOutput;
 
 public class MenuController {
@@ -19,33 +16,37 @@ public class MenuController {
     private ProductList productList;
     private MenuOutput menuOutput;
     private OrderController orderController;
+    private InitMenuOutput initMenuOutput;
 
     public void setMenuController(ProductList productList, Map<Item,Integer> orderMap) {
         this.productList = productList;
         this.orderMap = orderMap;
         orderController = new OrderController();
+        initMenuOutput = new InitMenuOutput();
     }
 
+    // 특정 메뉴의 정보를 출력하는 메서드
     public void printMenu() {
         if(productList instanceof Burgers) {
-            menuOutput = new BurgerMenuOutput();
+            menuOutput = initMenuOutput.getBurgerMenuOutput();
         } else if(productList instanceof Fried) {
-            menuOutput = new FriedMenuOutput();
+            menuOutput = initMenuOutput.getFriedMenuOutput();
         } else if(productList instanceof IceCream) {
-            menuOutput = new IceCreamMenuOutput();
+            menuOutput = initMenuOutput.getIceCreamMenuOutput();
         } else if(productList instanceof Beer) {
-            menuOutput = new BeerMenuOutput();
-        } 
-        
+            menuOutput = initMenuOutput.getBeerMenuOutput();
+        }
         // 해당 타입이 아니라면 예외처리가 발생해야하지만 이미 Main에서 막아주기 때문에 굳이 설정 안해도 될듯
 
         menuOutput.setMenu(productList);
         selectMenu();
     }
 
+    // 메뉴를 고르는 메서드
     public void selectMenu() {
         while(true) {
             menuOutput.printMenu();
+
             int number = Integer.parseInt(InputView.input());
             System.out.println();
 

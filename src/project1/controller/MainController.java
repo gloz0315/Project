@@ -13,11 +13,11 @@ import project1.view.InputView;
 import project1.view.output.MainMenuOutput;
 
 public class MainController {
-    private Map<Item,Integer> orderMap; // LinkedHashMap을 통해 주문 정보들을 순차적으로 처리하자.
+    private Map<Item,Integer> orderMap;     // LinkedHashMap을 통해 주문 정보들을 순차적으로 처리하자.
     private MainMenuOutput mainMenuOutput;  // 메인 화면에서의 화면 Output 담당
-    private MenuListInit menuListInit;      // 메뉴 별 종류들을 초기화 해주는 클래스
-    private ProductList productList;    // 제품별 정보를 저장하는 인터페이스인 ProductList를 이용할 것임
-    private MenuController menuController;
+    private MenuListInit menuListInit;      // 종류별 음식들의 정보들을 초기화 해주는 클래스
+    private ProductList productList;        // 제품별 정보를 저장하는 인터페이스인 ProductList를 이용할 것임
+    private MenuController menuController;  // 특정 종류의 음식을 선택할 때 사용되는 로직을 담당하는 클래스
 
     public MainController() {
         orderMap = new LinkedHashMap<>();
@@ -51,18 +51,21 @@ public class MainController {
                 printBuyList();
                 return;
             }
-            case 6 -> {         // 주문취소
-                orderMap.clear(); // orderMap에 대한 정보들을 다 제거
-                System.out.println("모든 주문이 취소되었습니다.\n");
+            case 6 -> {         // 주문취소  -> 추가적으로 만들어야 할 상황 (주문 취소 버튼의 재확인, 어떤 주문을 취소할 것인지 로직 구현)
+                clearOrderMenu();
                 return;
             }
-            default -> {        // 예외처리 발생해야함
+            default -> {
                 System.out.println("숫자를 잘못 입력하셨습니다. 다시 입력해주세요.\n");
                 return;
             }
         }
-
-        menuController.setMenuController(productList, orderMap);
+        getMenuController();
+    }
+    
+    // 음식 섹터별, 로직을 수행하게 될 menuController 호출
+    private void getMenuController() {
+        menuController.setMenuController(productList, orderMap);        // 음식 종류의 타입과 주문 정보 데이터를 넘긴다.
         menuController.printMenu();
         System.out.println();
     }
@@ -73,5 +76,10 @@ public class MainController {
             System.out.println("음식 이름:" + items.getKey().getName() + " 음식 가격:" + items.getKey().itemPrice()
              + " 음식 설명:" + items.getKey().getDescription());
         }
+    }
+    
+    private void clearOrderMenu() {
+        orderMap.clear();           // orderMap에 대한 정보들을 다 제거
+        System.out.println("모든 주문이 취소되었습니다.\n");
     }
 }
