@@ -35,8 +35,9 @@ public class MenuController {
             menuOutput = new IceCreamMenuOutput();
         } else if(productList instanceof Beer) {
             menuOutput = new BeerMenuOutput();
-        } else
-            return;                         // 예외처리 발생해야함
+        } 
+        
+        // 해당 타입이 아니라면 예외처리가 발생해야하지만 이미 Main에서 막아주기 때문에 굳이 설정 안해도 될듯
 
         menuOutput.setMenu(productList);
         selectMenu();
@@ -53,7 +54,7 @@ public class MenuController {
 
             // 메뉴를 고르는데 숫자 번호가 없을 경우 예외 발생
             if(productList.products().size() < number || number < 0) {
-                // 예외 발생
+                System.out.println("숫자를 잘못 입력하셨습니다. 다시 입력해주세요.\n");
                 continue;
             }
             orderController.setProductList(productList);
@@ -75,7 +76,7 @@ public class MenuController {
         } else if(number == 2)
             return;
 
-        // 예외처리 발생
+        System.out.println("숫자를 잘못 입력하셨습니다. 상품으로 메뉴가 넘어갑니다.\n");
     }
 
     // 메뉴 정보가 출력된 후, 추가할 것인지 확인해주는 메서드

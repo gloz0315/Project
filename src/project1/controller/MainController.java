@@ -38,33 +38,28 @@ public class MainController {
     }
 
     private void menuCase(int number) {
-        switch(number) {
-            case 1:         // 버거
-                productList = menuListInit.burgerMenu();
-                break;
-
-            case 2:         // 감자튀김
-                productList = menuListInit.friedMenu();
-                break;
-
-            case 3:         // 음료
-                productList = menuListInit.iceCreamMenu();
-                break;
-
-            case 4:         // 맥주
-                productList = menuListInit.beerMenu();
-                break;
-
-            case 5:         // 장바구니
+        switch (number) {
+            case 1 ->         // 버거
+                    productList = menuListInit.burgerMenu();
+            case 2 ->         // 감자튀김
+                    productList = menuListInit.friedMenu();
+            case 3 ->         // 음료
+                    productList = menuListInit.iceCreamMenu();
+            case 4 ->         // 맥주
+                    productList = menuListInit.beerMenu();
+            case 5 -> {         // 장바구니
                 printBuyList();
                 return;
-
-            case 6:         // 주문취소
+            }
+            case 6 -> {         // 주문취소
                 orderMap.clear(); // orderMap에 대한 정보들을 다 제거
+                System.out.println("모든 주문이 취소되었습니다.\n");
                 return;
-
-            default:        // 예외처리 발생해야함
+            }
+            default -> {        // 예외처리 발생해야함
+                System.out.println("숫자를 잘못 입력하셨습니다. 다시 입력해주세요.\n");
                 return;
+            }
         }
 
         menuController.setMenuController(productList, orderMap);
