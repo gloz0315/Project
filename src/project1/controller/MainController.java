@@ -13,12 +13,13 @@ import project1.view.InputView;
 import project1.view.output.MainMenuOutput;
 
 public class MainController {
-    private Map<Item,Integer> orderMap;     // LinkedHashMap을 통해 주문 정보들을 순차적으로 처리하자.
-    private MainMenuOutput mainMenuOutput;  // 메인 화면에서의 화면 Output 담당
-    private MenuListInit menuListInit;      // 종류별 음식들의 정보들을 초기화 해주는 클래스
-    private ProductList productList;        // 제품별 정보를 저장하는 인터페이스인 ProductList를 이용할 것임
-    private MenuController menuController;  // 특정 종류의 음식을 선택할 때 사용되는 로직을 담당하는 클래스
-    private BuyController buyController;    // 총 주문 정보들을 사려고 할때 처리하는 로직을 담당하는 클래스
+    private Map<Item,Integer> orderMap;                     // LinkedHashMap을 통해 주문 정보들을 순차적으로 처리하자.
+    private MainMenuOutput mainMenuOutput;                  // 메인 화면에서의 화면 Output 담당
+    private MenuListInit menuListInit;                      // 종류별 음식들의 정보들을 초기화 해주는 클래스
+    private ProductList productList;                        // 제품별 정보를 저장하는 인터페이스인 ProductList를 이용할 것임
+    private MenuController menuController;                  // 특정 종류의 음식을 선택할 때 사용되는 로직을 담당하는 클래스
+    private BuyController buyController;                    // 총 주문 정보들을 사려고 할때 처리하는 로직을 담당하는 클래스
+    private CancelOrderController cancelOrderController;    // 진행중인 주문을 취소할 때 처리하는 로직을 담당하는 클래스
 
     public MainController() {
         orderMap = new LinkedHashMap<>();
@@ -26,6 +27,7 @@ public class MainController {
         menuListInit = new MenuListInit();
         menuController = new MenuController();
         buyController = new BuyController(orderMap);
+        cancelOrderController = new CancelOrderController(orderMap);
     }
 
     public void start() {
@@ -51,7 +53,7 @@ public class MainController {
                 return;
             }
             case 6 -> {  // 주문취소  -> 추가적으로 만들어야 할 상황 (주문 취소 버튼의 재확인, 어떤 주문을 취소할 것인지 로직 구현)
-                clearOrderMenu();
+                cancelOrderController.cancelOrder();
                 return;
             }
             default -> {
@@ -67,27 +69,5 @@ public class MainController {
         menuController.setMenuController(productList, orderMap);        // 음식 종류의 타입과 주문 정보 데이터를 넘긴다.
         menuController.printMenu();
         System.out.println();
-    }
-    
-    // 장바구니에 대한 정보들을 다 삭제할 것인지에 대한 메서드
-    private void clearOrderMenu() {
-        if(isClearOrder()) {
-            orderMap.clear();           // orderMap에 대한 정보들을 다 제거
-            System.out.println("모든 주문이 취소되었습니다.\n");
-        }
-    }
-
-    private boolean isClearOrder() {
-        while(true) {
-            System.out.println("주문을 취소 하시겠습니까?");
-            System.out.println("1. 확인       2. 취소");
-            String text = InputView.input();
-            System.out.println();
-
-            if(text.equals("1"))
-                return true;
-            else if(text.equals("2"))
-                return false;
-        }
     }
 }
