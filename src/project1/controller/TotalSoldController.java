@@ -22,14 +22,13 @@ public class TotalSoldController {
     // 판매될 때의 내용을 저장소에 저장
     public void saveSoldItem(Map<Item,Integer> items) {
         for(Entry<Item,Integer> item : items.entrySet()) {
-            Item item1 = new Item(item.getKey().getName(),item.getKey().getDescription(), item.getKey().itemPrice());
-            Item inputItem = isContainItem(item1);
+            Item item1 = item.getKey();
 
-            if(inputItem == null) {
-                totalSoldRepository.put(item1, item.getValue());
+            if(isContainItem(item1)){
+                totalSoldRepository.replace(item1, totalSoldRepository.get(item1) + item.getValue());
                 return;
             }
-            totalSoldRepository.replace(inputItem, totalSoldRepository.get(inputItem) + item.getValue());
+            totalSoldRepository.put(item1, item.getValue());
         }
     }
 
@@ -98,17 +97,7 @@ public class TotalSoldController {
         return totalPrice;
     }
 
-    // totalSoldRepository에 해당 주문 아이템이 있는지 판단하는 메서드
-    private Item isContainItem(Item item) {
-        // return totalSoldRepository.containsKey(item); // containsKey는 equals()를 토대로 동작함. 따라서 하면 안됨 (주소값을 이용하니까)
-        // 그래서 값 자체를 판단하게 로직을 변경
-        String name = item.getName();
-        float price = item.itemPrice();
-        
-        for(Entry<Item,Integer> repository : totalSoldRepository.entrySet()) {
-            if(repository.getKey().getName().equals(name) && repository.getKey().itemPrice() == price)
-                return repository.getKey();
-        }
-        return null;
+    private boolean isContainItem(Item item) {
+        return totalSoldRepository.containsKey(item);
     }
 }
