@@ -41,19 +41,16 @@ public class MainController {
 
     private void menuCase(int number) {
         switch (number) {
-            case 1 ->
-                    productList = menuListInit.burgerMenu();
-            case 2 ->
-                    productList = menuListInit.friedMenu();
-            case 3 ->
-                    productList = menuListInit.iceCreamMenu();
-            case 4 ->
-                    productList = menuListInit.beerMenu();
-            case 5 -> {         // 주문 버튼 (이거는 하나의 컨트롤러 클래스를 따로 정리해서 만들어야겠다.)
-                printBuyList();
+            case 1 -> productList = menuListInit.burgerMenu();
+            case 2 -> productList = menuListInit.friedMenu();
+            case 3 -> productList = menuListInit.iceCreamMenu();
+            case 4 -> productList = menuListInit.beerMenu();
+            case 5 -> {
+                buyController.setDelayTime(3);          // 3초 정도 딜레이 타임을 가지도록 함
+                buyController.buy();
                 return;
             }
-            case 6 -> {         // 주문취소  -> 추가적으로 만들어야 할 상황 (주문 취소 버튼의 재확인, 어떤 주문을 취소할 것인지 로직 구현)
+            case 6 -> {  // 주문취소  -> 추가적으로 만들어야 할 상황 (주문 취소 버튼의 재확인, 어떤 주문을 취소할 것인지 로직 구현)
                 clearOrderMenu();
                 return;
             }
@@ -71,24 +68,6 @@ public class MainController {
         menuController.printMenu();
         System.out.println();
     }
-
-    // 장바구니에 대한 정보 출력
-    private void printBuyList() {
-        float total = 0.0f;
-        System.out.println("다음과 같이 주문하시겠습니까?\n\n");
-
-        System.out.println("[ Orders ]");
-        for(Entry<Item,Integer> items : orderMap.entrySet()) {
-            System.out.println("음식 이름:" + items.getKey().getName() + " 음식 가격:" + items.getKey().itemPrice()
-             + " 음식 설명:" + items.getKey().getDescription());
-            total += items.getKey().itemPrice();
-        }
-
-        System.out.println();
-        System.out.println("[ Total ] ");
-        System.out.println("W " + total + "\n");
-        System.out.println("1. 주문     2. 메뉴판");
-    }
     
     // 장바구니에 대한 정보들을 다 삭제할 것인지에 대한 메서드
     private void clearOrderMenu() {
@@ -96,7 +75,6 @@ public class MainController {
             orderMap.clear();           // orderMap에 대한 정보들을 다 제거
             System.out.println("모든 주문이 취소되었습니다.\n");
         }
-
     }
 
     private boolean isClearOrder() {
