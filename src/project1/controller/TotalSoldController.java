@@ -22,13 +22,11 @@ public class TotalSoldController {
     // 판매될 때의 내용을 저장소에 저장
     public void saveSoldItem(Map<Item,Integer> items) {
         for(Entry<Item,Integer> item : items.entrySet()) {
-            Item item1 = item.getKey();
-
-            if(isContainItem(item1)){
-                totalSoldRepository.replace(item1, totalSoldRepository.get(item1) + item.getValue());
+            if(isContainItem(item.getKey())){
+                totalSoldRepository.replace(item.getKey(), totalSoldRepository.get(item.getKey()) + item.getValue());
                 return;
             }
-            totalSoldRepository.put(item1, item.getValue());
+            totalSoldRepository.put(item.getKey(), item.getValue());
         }
     }
 

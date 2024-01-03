@@ -19,6 +19,11 @@ public class BuyController {
     }
 
     public void buy() {
+        if(isEmpty()) {
+            System.out.println("주문 내역이 없습니다. 메뉴판으로 이동합니다.\n");
+            return;
+        }
+
         buyList();
         printTotalPrice();
         orderChoice();
@@ -36,7 +41,7 @@ public class BuyController {
 
     private void printTotalPrice() {
         System.out.println("[ Total ]");
-        System.out.printf("W %.1f \n", totalPrice());
+        System.out.printf("W %.1f \n\n", totalPrice());
     }
 
     private void orderChoice() {
@@ -91,5 +96,9 @@ public class BuyController {
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private boolean isEmpty() {
+        return orderMap.isEmpty();
     }
 }
