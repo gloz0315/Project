@@ -43,7 +43,6 @@ public class CancelOrderController {
                 System.out.println("주문을 취소하셨습니다. 메뉴 화면으로 이동합니다.\n");
                 break;
             }
-
             System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.\n");
         }
     }

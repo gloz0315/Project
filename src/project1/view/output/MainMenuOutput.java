@@ -30,12 +30,12 @@ public class MainMenuOutput {
     }
 
     private void printOrderMenu(String format, int nextNum) {
-        String[] orderName = {"Order","Cancel"};
-        String[] orderDescription = {"장바구니를 확인 후 주문합니다.", "진행중인 주문을 취소합니다."};
+        String[] orderName = {"Order","Cancel","Sold"};
+        String[] orderDescription = {"장바구니를 확인 후 주문합니다.", "진행중인 주문을 취소합니다.","판매된 상품과 금액을 확인합니다."};
         int number = 0;
 
         System.out.println("[ ORDER MENU ]");
-        for(int i = nextNum; i <= nextNum+1; i++) {
+        for(int i = nextNum; i < nextNum+orderName.length; i++) {
             System.out.printf((format) + "%n",i,orderName[number],orderDescription[number]);
             number++;
         }

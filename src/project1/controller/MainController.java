@@ -13,20 +13,22 @@ import project1.view.InputView;
 import project1.view.output.MainMenuOutput;
 
 public class MainController {
-    private Map<Item,Integer> orderMap;                     // LinkedHashMap을 통해 주문 정보들을 순차적으로 처리하자.
+    private Map<Item,Integer> orderMap;                     // LinkedHashMap을 통해 주문 정보들을 순차적으로 처리
     private MainMenuOutput mainMenuOutput;                  // 메인 화면에서의 화면 Output 담당
     private MenuListInit menuListInit;                      // 종류별 음식들의 정보들을 초기화 해주는 클래스
-    private ProductList productList;                        // 제품별 정보를 저장하는 인터페이스인 ProductList를 이용할 것임
+    private ProductList productList;                        // 제품별 정보를 저장하는 인터페이스인 ProductList를 이용
     private MenuController menuController;                  // 특정 종류의 음식을 선택할 때 사용되는 로직을 담당하는 클래스
     private BuyController buyController;                    // 총 주문 정보들을 사려고 할때 처리하는 로직을 담당하는 클래스
     private CancelOrderController cancelOrderController;    // 진행중인 주문을 취소할 때 처리하는 로직을 담당하는 클래스
+    private TotalSoldController totalSoldController;        // 총 판매한 정보들을 처리하는 로직을 담당하는 클래스
 
     public MainController() {
         orderMap = new LinkedHashMap<>();
         mainMenuOutput = new MainMenuOutput();
         menuListInit = new MenuListInit();
         menuController = new MenuController();
-        buyController = new BuyController(orderMap);
+        totalSoldController = new TotalSoldController();
+        buyController = new BuyController(orderMap, totalSoldController);
         cancelOrderController = new CancelOrderController(orderMap);
     }
 
@@ -56,6 +58,12 @@ public class MainController {
                 cancelOrderController.cancelOrder();
                 return;
             }
+            case 7 -> {
+                // 총 판매 금액, 총 판매 내용에 대한 클래스 생성
+                totalSoldController.menuChoice();
+                return;
+            }
+            // 옵션에 대한 추가적인 기능 구현 미완
             default -> {
                 System.out.println("숫자를 잘못 입력하셨습니다. 다시 입력해주세요.\n");
                 return;
