@@ -51,6 +51,7 @@ public class MenuController {
         return null;
     }
 
+    // 메뉴 이름을 정해주는 메서드
     private String[] decideMenuName(ProductList productList) {
         if(productList instanceof Burgers) {
             names[0] = "버거";
