@@ -40,7 +40,7 @@ public class TotalSoldController {
     private void printSoldItemList() {
         System.out.println("[ 총 판매된 주문 목록 ]");
         System.out.println("현재까지 총 판매된 상품 목록은 아래와 같습니다.\n");
-        String format = "- %-15s | W %.1f | %d 개\n";
+        String format = "- %-20s | W %.1f | %d 개\n";
         
         for(Entry<Item, Integer> items : totalSoldRepository.entrySet())
             System.out.printf((format),items.getKey().getName(), items.getKey().itemPrice(),items.getValue());
@@ -48,13 +48,13 @@ public class TotalSoldController {
         backToMenu();
     }
 
+    // 판매금액 현황을 출력해주는 메서드
     private void printSoldPrice() {
         System.out.println("[ 총 판매 금액 현황 ]");
         System.out.printf("현재까지 총 판매된 금액은 [ W %.1f ] 원 입니다.\n\n" ,calculateTotalPrice());
         backToMenu();
     }
 
-    //
     private void insertNumber() {
         while(true) {
             String text = InputView.input();

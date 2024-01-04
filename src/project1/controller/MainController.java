@@ -5,7 +5,6 @@ package project1.controller;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import project1.model.Item;
 import project1.model.MenuListInit;
 import project1.model.productList.ProductList;
@@ -36,10 +35,14 @@ public class MainController {
         while(true) {
             mainMenuOutput.welcomeStatement();
             mainMenuOutput.printMainMenu();
-            int number = Integer.parseInt(InputView.input());
+            String number = InputView.input();
+            if(number.isEmpty()) {                      // null값으로 들어오면 예외
+                System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.\n");
+                continue;
+            }
             System.out.println();
 
-            menuCase(number);
+            menuCase(Integer.parseInt(number));
         }
     }
 
@@ -51,19 +54,17 @@ public class MainController {
             case 4 -> productList = menuListInit.beerMenu();
             case 5 -> {
                 buyController.setDelayTime(3);          // 3초 정도 딜레이 타임을 가지도록 함
-                buyController.buy();
+                buyController.buy();                    // 장바구니를 확인 후 주문
                 return;
             }
-            case 6 -> {  // 주문취소  -> 추가적으로 만들어야 할 상황 (주문 취소 버튼의 재확인, 어떤 주문을 취소할 것인지 로직 구현)
-                cancelOrderController.cancelOrder();
+            case 6 -> {
+                cancelOrderController.cancelOrder(); // 주문취소
                 return;
             }
             case 7 -> {
-                // 총 판매 금액, 총 판매 내용에 대한 클래스 생성
-                totalSoldController.menuChoice();
+                totalSoldController.menuChoice(); // 총 판매 금액, 총 판매 내용에 대한 로직
                 return;
             }
-            // 옵션에 대한 추가적인 기능 구현 미완
             default -> {
                 System.out.println("숫자를 잘못 입력하셨습니다. 다시 입력해주세요.\n");
                 return;

@@ -27,40 +27,48 @@ public class MenuController {
 
     // 특정 메뉴의 정보를 출력하는 메서드
     public void printMenu() {
-        if(productList instanceof Burgers) {
-            menuOutput = initMenuOutput.getBurgerMenuOutput();
-        } else if(productList instanceof Fried) {
-            menuOutput = initMenuOutput.getFriedMenuOutput();
-        } else if(productList instanceof IceCream) {
-            menuOutput = initMenuOutput.getIceCreamMenuOutput();
-        } else if(productList instanceof Beer) {
-            menuOutput = initMenuOutput.getBeerMenuOutput();
-        }
-        // 해당 타입이 아니라면 예외처리가 발생해야하지만 이미 Main에서 막아주기 때문에 굳이 설정 안해도 될듯
-
+        menuOutput = selectMenuOutput();
         menuOutput.setMenu(productList);
         selectMenu();
     }
 
+    // menuOutput에 대한 타입을 지정해줌
+    private MenuOutput selectMenuOutput() {
+        if(productList instanceof Burgers) {
+            return initMenuOutput.getBurgerMenuOutput();
+        } else if(productList instanceof Fried) {
+            return initMenuOutput.getFriedMenuOutput();
+        } else if(productList instanceof IceCream) {
+            return initMenuOutput.getIceCreamMenuOutput();
+        } else if(productList instanceof Beer) {
+            return initMenuOutput.getBeerMenuOutput();
+        }
+
+        // 해당 타입이 아니라면 예외처리가 발생해야하지만 이미 Main에서 막아주기 때문에 굳이 설정 안해도 될듯
+        return null;
+    }
+
     // 메뉴를 고르는 메서드
-    public void selectMenu() {
+    private void selectMenu() {
         while(true) {
             menuOutput.printMenu();
 
-            int number = Integer.parseInt(InputView.input());
+            int number = checkNumber();
             System.out.println();
 
             if(number == 0)
                 break;
+            else if(number == -1) {
+                System.out.println("숫자를 잘못 입력하셨습니다. 다시 입력해주세요.\n");
+                continue;
+            }
 
-            // 메뉴를 고르는데 숫자 번호가 없을 경우 예외 발생
             if(productList.products().size() < number || number < 0) {
                 System.out.println("숫자를 잘못 입력하셨습니다. 다시 입력해주세요.\n");
                 continue;
             }
             orderController.setProductList(productList);
-            Item item = orderController.choiceMenu(number);     // 아이템 정보를 넘겨줌
-            orderMenu(item);
+            orderMenu(typeOrderMenu(number));
         }
     }
 
@@ -82,7 +90,7 @@ public class MenuController {
 
     // 메뉴 정보가 출력된 후, 추가할 것인지 확인해주는 메서드
     private void menuInformation(Item item) {
-        String format = "%-15s | W %.1f | %s";
+        String format = "%-20s | W %.1f | %s";
         System.out.printf((format) + "%n",item.getName(),item.itemPrice(),item.getDescription());
         System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
         System.out.println("1. 확인        2. 취소\n");
@@ -95,5 +103,40 @@ public class MenuController {
             return;
         }
         orderMap.put(item,1);
+    }
+
+    // 입력 숫자값이 null값인지 체크해주는 메서드
+    private int checkNumber() {
+        String number = InputView.input();
+
+        if(number.isEmpty())
+            return -1;
+
+        return Integer.parseInt(number);
+    }
+
+    private Item itemInfo(int number) {
+        return orderController.choiceMenu(number);
+    }
+
+    // Single타입인지 Double타입인지 메뉴를 골라주는 메서드
+    private Item typeOrderMenu(int number) {
+        Item item = itemInfo(number);
+        String format =  "%-20s | W %.1f | %s\n";
+
+        while(true) {
+            System.out.printf((format),item.getName(),item.itemPrice(),item.getDescription());
+            System.out.println("위 메뉴의 어떤 옵션으로 추가하시겠습니까?");
+            System.out.printf("1. Single(W %.1f)      2. Double(W %.1f)\n\n", item.itemPrice(), item.itemPrice() + 3.0f);
+
+            String text = InputView.input();
+
+            if(text.equals("1"))
+                return item;
+            else if(text.equals("2")) {
+                return orderController.choiceDoubleMenu(number);
+            }
+            System.out.println("잘못 누르셨습니다. 다시 눌러주세요.\n");
+        }
     }
 }
