@@ -17,18 +17,21 @@ public class MenuController {
     private MenuOutput menuOutput;
     private OrderController orderController;
     private InitMenuOutput initMenuOutput;
+    private String[] names;
 
     public void setMenuController(ProductList productList, Map<Item,Integer> orderMap) {
         this.productList = productList;
         this.orderMap = orderMap;
         orderController = new OrderController();
         initMenuOutput = new InitMenuOutput();
+        names = new String[2];
     }
 
     // 특정 메뉴의 정보를 출력하는 메서드
     public void printMenu() {
         menuOutput = selectMenuOutput();
         menuOutput.setMenu(productList);
+        names = decideMenuName(productList);
         selectMenu();
     }
 
@@ -48,10 +51,31 @@ public class MenuController {
         return null;
     }
 
+    private String[] decideMenuName(ProductList productList) {
+        if(productList instanceof Burgers) {
+            names[0] = "버거";
+            names[1] = "Burgers";
+            return names;
+        } else if(productList instanceof Fried) {
+            names[0] = "감자튀김";
+            names[1] = "Fried";
+            return names;
+        } else if(productList instanceof IceCream) {
+            names[0] = "아이스크림";
+            names[1] = "IceCream";
+            return names;
+        } else if(productList instanceof Beer) {
+            names[0] = "맥주";
+            names[1] = "Beer";
+            return names;
+        }
+        return null;
+    }
+
     // 메뉴를 고르는 메서드
     private void selectMenu() {
         while(true) {
-            menuOutput.printMenu();
+            menuOutput.printMenu(productList,names);
 
             int number = checkNumber();
             System.out.println();
