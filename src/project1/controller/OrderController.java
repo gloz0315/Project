@@ -14,4 +14,8 @@ public class OrderController {
     public Item choiceMenu(int number) {
         return productList.products().get(number-1);
     }
+
+    public Item choiceDoubleMenu(int number) {
+        return productList.doubleProducts().get(number-1);
+    }
 }

@@ -71,7 +71,7 @@ public class BuyController {
     
     private void printMenuList() {
         System.out.println("[ Orders ]");
-        String format = "%-15s | W %.1f | %d 개 | %s\n";     // 주문 갯수 포함
+        String format = "%-20s | W %.1f | %d 개 | %s\n";     // 주문 갯수 포함
         for(Entry<Item,Integer> items : orderMap.entrySet()) {
             System.out.printf((format),items.getKey().getName(), items.getKey().itemPrice(),items.getValue()
                     ,items.getKey().getDescription());

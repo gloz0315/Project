@@ -12,7 +12,7 @@ public class BeerMenuOutput implements MenuOutput{
 
     @Override
     public void printMenu() {
-        String format = "%d. %-15s | W %.1f | %s";
+        String format = "%d. %-20s | W %.1f | %s";
         System.out.println("아래 주류 메뉴판 보시고 상품을 골라 입력해주세요.\n");
         System.out.println("[ Beer MENU ]");
 

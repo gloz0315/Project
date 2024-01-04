@@ -6,4 +6,5 @@ import project1.model.Item;
 public interface ProductList {
     void initProductList();
     List<Item> products();
+    List<Item> doubleProducts();
 }
