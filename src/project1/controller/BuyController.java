@@ -19,7 +19,7 @@ public class BuyController {
     }
 
     public void buy() {
-        if(isEmpty()) {
+        if(orderMap.isEmpty()) {
             System.out.println("주문 내역이 없습니다. 메뉴판으로 이동합니다.\n");
             return;
         }
@@ -96,9 +96,5 @@ public class BuyController {
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    private boolean isEmpty() {
-        return orderMap.isEmpty();
     }
 }
